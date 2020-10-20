@@ -4,7 +4,6 @@ import VideoPlayer from './VideoPlayer.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 
 const App = () => {
-  console.log(exampleVideoData);
   return (
     <div>
       <nav className="navbar">
@@ -17,7 +16,7 @@ const App = () => {
           <VideoPlayer />
         </div>
         <div className="col-md-5">
-          <VideoList />
+          <VideoList videos={exampleVideoData} />
         </div>
       </div>
     </div>
