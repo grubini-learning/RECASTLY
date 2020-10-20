@@ -22,19 +22,11 @@ class App extends React.Component {
   onSearchHandler(event) {
     // data: { order: '-createdAt' },
     const keyword = event.target.value;
-    this.setState({ keyword }, () => {
-      //   $.ajax({
-      //     url: `${BASE_URL}${keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`,
-      //     type: 'GET',
-      //     contentType: 'application/json',
-      //     success: (data) => {
-      //       console.log('success');
-      //       console.log(data);
-      //     }),
-      //     error: function(error) {
-      //       console.error('chatterbox: Failed to fetch messages', error);
-      //     }
-      // });
+    this.setState({ keyword }, () => _.debounce(this.onRequest, 5000));
+  }
+  onRequest() {
+    $.get(`${BASE_URL}${this.state.keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`, function(data) {
+      console.log(data);
     });
   }
 
