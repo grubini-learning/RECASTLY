@@ -2,6 +2,7 @@ import Search from './Search.js';
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
 import exampleVideoData from '../data/exampleVideoData.js';
+import { BASE_URL, YOUTUBE_API_KEY, EMBEDDABLE } from '../config/youtube.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,11 +12,26 @@ class App extends React.Component {
         id: 'dQw4w9WgXcQ',
         title: 'recast.ly',
         description: 'rolled'
-      }
+      },
+      keyword: ''
     };
   }
   onClickHandler(video) {
     this.setState({ video });
+  }
+  onSearchHandler(event) {
+    const keyword = event.target.value;
+    this.setState({ keyword });
+    // $.ajax({
+    //   url: ,
+    //   type: 'GET',
+    //   data: { order: '-createdAt' },
+    //   contentType: 'application/json',
+    //   success: successCB,
+    //   error: errorCB || function(error) {
+    //     console.error('chatterbox: Failed to fetch messages', error);
+    //   }
+    // });
   }
 
   render() {
@@ -23,7 +39,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search keyword={this.state.keyword} input={this.onSearchHandler.bind(this)} />
           </div>
         </nav>
         <div className="row">
