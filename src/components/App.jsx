@@ -30,23 +30,11 @@ class App extends React.Component {
     this.setState({ keyword }, () => this.state.onDelayedSearch(this.state.keyword));
   }
   onRequest(keyword) {
-    console.log('clicked');
-    // https://5f8f5b14693e730016d7aff7.mockapi.io/users
     let items = [];
     fetch(`${BASE_URL}${keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`)
       .then(response => response.json())
       .then(data => data.items)
       .then(videos => this.setState({ videos }));
-    // $.get(`https://5f8f5b14693e730016d7aff7.mockapi.io/users`, (data) => data)
-    //   .done(items => {
-    //     console.log(items);
-    //     this.setState({ numbers: items }, () => {
-    //       console.log('this is the numbers state')
-    //       console.log(this.state.numbers)
-    //     })
-    //   });
-    // ${BASE_URL}${keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}
-
   }
 
   render() {
