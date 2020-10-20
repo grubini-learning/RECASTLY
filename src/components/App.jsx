@@ -15,7 +15,8 @@ class App extends React.Component {
       },
       keyword: '',
       videos: exampleVideoData,
-      onDelayedSearch: _.debounce(this.onRequest, 500)
+      onDelayedSearch: _.debounce(this.onRequest, 500).bind(this),
+      numbers: []
     };
   }
   componentDidMount() {
@@ -26,11 +27,24 @@ class App extends React.Component {
   }
   onSearchHandler(event) {
     const keyword = event.target.value;
-    this.setState({keyword}, () => this.state.onDelayedSearch(this.state.keyword));
+    this.setState({ keyword }, () => this.state.onDelayedSearch(this.state.keyword));
   }
   onRequest(keyword) {
     // https://5f8f5b14693e730016d7aff7.mockapi.io/users
-    $.get(`${BASE_URL}${keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`, (data) => this.setState({videos: data.items}));
+    let items = [];
+    fetch(`${BASE_URL}${keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`)
+      .then(response => response.json())
+      .then(data => data.items)
+      .then(videos => this.setState({ videos }));
+    // $.get(`https://5f8f5b14693e730016d7aff7.mockapi.io/users`, (data) => data)
+    //   .done(items => {
+    //     console.log(items);
+    //     this.setState({ numbers: items }, () => {
+    //       console.log('this is the numbers state')
+    //       console.log(this.state.numbers)
+    //     })
+    //   });
+    // ${BASE_URL}${keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}
 
   }
 
