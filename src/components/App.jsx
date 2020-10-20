@@ -13,18 +13,39 @@ class App extends React.Component {
         title: 'recast.ly',
         description: 'rolled'
       },
-      keyword: ''
+      keyword: '',
+      called: false
     };
   }
   onClickHandler(video) {
     this.setState({ video });
   }
   onSearchHandler(event) {
-    // data: { order: '-createdAt' },
     const keyword = event.target.value;
-    this.setState({ keyword }, () => _.debounce(this.onRequest, 5000));
+    this.setState({keyword});
+    // data: { order: '-createdAt' },
+    // const keyword = event.target.value;
+    // // this.setState({ keyword }, () => this.state.times());
+    // this.setState({ keyword }, () => {
+    //   if (!this.state.called) {
+    //     this.setState({called: true});
+    //     this.onRequest();
+    //   } else {
+    //     setTimeout(() => {
+    //       this.setState({called: false});
+    //     }, 2000);
+    //   }
+    // });
+
+    // this.setState({ keyword }, () => {
+    //   _.debounce(this.onRequest, 300, {
+    //     'leading': true,
+    //     'trailing': false
+    //   });
+    // });
   }
   onRequest() {
+    // console.log(this.state.keyword);
     $.get(`${BASE_URL}${this.state.keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`, function(data) {
       console.log(data);
     });
@@ -35,7 +56,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search keyword={this.state.keyword} input={this.onSearchHandler.bind(this)} />
+            <Search click={this.onRequest.bind(this)} keyword={this.state.keyword} input={this.onSearchHandler.bind(this)} />
           </div>
         </nav>
         <div className="row">
