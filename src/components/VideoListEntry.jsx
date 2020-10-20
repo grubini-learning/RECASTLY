@@ -1,4 +1,5 @@
 var VideoListEntry = (props) => {
+  // console.log(props.video);
   const { title, description, thumbnails } = props.video.snippet;
   const clickHandler = (video) => props.click(video);
   return (

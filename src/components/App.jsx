@@ -14,41 +14,24 @@ class App extends React.Component {
         description: 'rolled'
       },
       keyword: '',
-      called: false
+      videos: exampleVideoData,
+      onDelayedSearch: _.debounce(this.onRequest, 500)
     };
+  }
+  componentDidMount() {
+    // this.onRequest('random');
   }
   onClickHandler(video) {
     this.setState({ video });
   }
   onSearchHandler(event) {
     const keyword = event.target.value;
-    this.setState({keyword});
-    // data: { order: '-createdAt' },
-    // const keyword = event.target.value;
-    // // this.setState({ keyword }, () => this.state.times());
-    // this.setState({ keyword }, () => {
-    //   if (!this.state.called) {
-    //     this.setState({called: true});
-    //     this.onRequest();
-    //   } else {
-    //     setTimeout(() => {
-    //       this.setState({called: false});
-    //     }, 2000);
-    //   }
-    // });
-
-    // this.setState({ keyword }, () => {
-    //   _.debounce(this.onRequest, 300, {
-    //     'leading': true,
-    //     'trailing': false
-    //   });
-    // });
+    this.setState({keyword}, () => this.state.onDelayedSearch(this.state.keyword));
   }
-  onRequest() {
-    // console.log(this.state.keyword);
-    $.get(`${BASE_URL}${this.state.keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`, function(data) {
-      console.log(data);
-    });
+  onRequest(keyword) {
+    // https://5f8f5b14693e730016d7aff7.mockapi.io/users
+    $.get(`${BASE_URL}${keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`, (data) => this.setState({videos: data.items}));
+
   }
 
   render() {
@@ -64,7 +47,7 @@ class App extends React.Component {
             <VideoPlayer video={this.state.video} />
           </div>
           <div className="col-md-5">
-            <VideoList click={this.onClickHandler.bind(this)} videos={exampleVideoData} />
+            <VideoList click={this.onClickHandler.bind(this)} videos={this.state.videos || []} />
           </div>
         </div>
       </div >
