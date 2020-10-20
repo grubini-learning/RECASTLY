@@ -20,18 +20,22 @@ class App extends React.Component {
     this.setState({ video });
   }
   onSearchHandler(event) {
+    // data: { order: '-createdAt' },
     const keyword = event.target.value;
-    this.setState({ keyword });
-    // $.ajax({
-    //   url: ,
-    //   type: 'GET',
-    //   data: { order: '-createdAt' },
-    //   contentType: 'application/json',
-    //   success: successCB,
-    //   error: errorCB || function(error) {
-    //     console.error('chatterbox: Failed to fetch messages', error);
-    //   }
-    // });
+    this.setState({ keyword }, () => {
+      //   $.ajax({
+      //     url: `${BASE_URL}${keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`,
+      //     type: 'GET',
+      //     contentType: 'application/json',
+      //     success: (data) => {
+      //       console.log('success');
+      //       console.log(data);
+      //     }),
+      //     error: function(error) {
+      //       console.error('chatterbox: Failed to fetch messages', error);
+      //     }
+      // });
+    });
   }
 
   render() {
