@@ -20,7 +20,7 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
-    // this.onRequest('random');
+    this.onRequest('random');
   }
   onClickHandler(video) {
     this.setState({ video });
@@ -30,6 +30,7 @@ class App extends React.Component {
     this.setState({ keyword }, () => this.state.onDelayedSearch(this.state.keyword));
   }
   onRequest(keyword) {
+    console.log('clicked');
     // https://5f8f5b14693e730016d7aff7.mockapi.io/users
     let items = [];
     fetch(`${BASE_URL}${keyword}${EMBEDDABLE}${YOUTUBE_API_KEY}`)
@@ -53,7 +54,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search click={this.onRequest.bind(this)} keyword={this.state.keyword} input={this.onSearchHandler.bind(this)} />
+            <Search click={this.onRequest.bind(this, this.state.keyword)} keyword={this.state.keyword} input={this.onSearchHandler.bind(this)} />
           </div>
         </nav>
         <div className="row">
